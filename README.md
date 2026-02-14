@@ -40,11 +40,20 @@ To understand why this is a "Spark Killer," we must look at the **Performance Ec
 ### The "Cost Efficiency" Multiplier
 In a cloud environment (AWS/GCP), running a small Spark cluster often requires a minimum of 3 nodes (1 Driver, 2 Workers). For a 10GB task, the **idle cost** of those nodes during setup and teardown often exceeds the actual processing cost. Our Rust engine hits peak throughput instantly, allowing for **T3-micro/small** instances to handle workloads that usually require **m5-xlarge** clusters.
 
-## 📂 The `volume` Folder: Persistent Infrastructure
-The `volume/` directory in this project is critical for **Infrastructure Reproducibility**. 
-- It acts as the persistent storage layer for **LocalStack**. 
-- When LocalStack runs inside a container, its state (mock S3 buckets, files, metadata) is ephemeral by default. 
-- By mapping the container's internal state to the host's `volume/` folder, we ensure that your generated 100M row dataset survives container restarts. This mimics a **real-world EBS/EFS setup** where data is decoupled from compute.
+## 🐍 Python & Rust: The "Modern Data Stack" Synergy
+
+This project demonstrates a mature "Best-of-Both-Worlds" architecture, perfect for teams looking to optimize high-scale data pipelines without sacrificing developer velocity.
+
+### Why Python for Orchestration?
+- **Dagster Assets:** We leverage Python's rich ecosystem to manage the high-level metadata, sensors, and data lineage. This ensures that the pipeline is maintainable, observable, and easy to integrate with other business logic.
+- **Fast Iteration:** Data generation and validation are implemented in Python, allowing for rapid schema adjustments and complex data quality checks using DuckDB and Pandas.
+
+### Why Rust for the Engine?
+- **The Performance Bridge:** When Python's global interpreter lock (GIL) or memory overhead becomes a bottleneck for 100M+ row processing, we offload the heavy lifting to a specialized Rust binary.
+- **Vertical Scaling:** By using Rust and Polars, we achieve performance that typically requires a multi-node Spark cluster, but on a single node. This drastically reduces cloud infrastructure complexity and costs (FinOps).
+
+### The Integration Layer
+The project showcases sophisticated subprocess orchestration, where Python manages the data lifecycle and environment, while Rust provides the raw computational power. This "Modular Monolith" approach is how modern engineering teams build high-performance, cost-effective platforms.
 
 ## 🚀 Real-World Applications
 
