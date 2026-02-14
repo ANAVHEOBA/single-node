@@ -1,0 +1,15 @@
+# Rust
+DataEng/target/
+
+# Python
+**/__pycache__/
+*.pyc
+Orchestrator/.tmp_dagster_home*/
+Orchestrator/dagster_home/
+
+# Data
+**/data/
+volume/
+
+# OS
+.DS_Store

@@ -1,0 +1,6 @@
+pandas
+pyarrow
+faker
+boto3
+tqdm
+numpy

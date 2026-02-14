@@ -1,0 +1,7 @@
+dagster
+dagster-webserver
+dagster-cloud
+boto3
+duckdb
+pandas
+pyarrow
